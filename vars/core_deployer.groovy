@@ -1,12 +1,7 @@
 def call(Map config) {
 
     pipeline {
-        agent {
-            docker {
-                image 'yigitbasalma/jenkins:latest'
-                args '-v /var/lib/jenkins/scripts/:/scripts -v /var/lib/jenkins/infos/:/infos -v /var/lib/jenkins/.ssh:/root/.ssh'
-            }
-        }
+        agent any
 
         stages {
             stage("Configure Init") {
