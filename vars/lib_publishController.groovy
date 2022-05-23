@@ -1,12 +1,16 @@
 def call(Map config) {
     config.b_config.projects.each { it ->
         if ( it.containsKey("push") && it.push ) {
-            sh """
-            ${config.b_config.project.builderVersion} nuget push --skip-duplicate \
-                -s ${it.target} \
-                -k ${it.key} \
-                ${WORKSPACE}/nupkgs/${it.name}
-            """
+            withCredentials([[$class:"UsernamePasswordMultiBinding", credentialsId: it.key, usernameVariable: "USERNAME", passwordVariable: "PASSWORD"]]) {
+                sh """
+                for artifact in \$(ls | grep -E "*.tgz")
+                do
+                    curl -v -u ${USERNAME}:${PASSWORD} \
+                    -X POST "${it.target}/service/rest/v1/components?repository=${it.repo}" \
+                    -F "npm.asset=@\${artifact}"
+                done
+                """
+            }
         }
     }
 }

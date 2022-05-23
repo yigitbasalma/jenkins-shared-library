@@ -11,11 +11,8 @@ def call(Map config) {
         }
 
         sh """
-        ${config.b_config.project.builderVersion} build -c Release --no-restore \
-            -o ${it.path}/out \
-            ${buildArgs.unique().join(" ")} \
-            /p:Version="${config.project_full_version}" \
-            ${it.path}
+        ${config.b_config.project.builderVersion} run build \
+            ${buildArgs.unique().join(" ")}
         """
     }
 }
