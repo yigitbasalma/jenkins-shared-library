@@ -1,7 +1,13 @@
 def call(Map config) {
 
     pipeline {
-        agent any
+              yaml '''
+      spec:
+        containers:
+        - name: nodejs
+          image: node:16
+'''
+      …
 
         stages {
             stage("Configure Init") {
