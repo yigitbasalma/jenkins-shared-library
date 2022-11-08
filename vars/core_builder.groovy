@@ -1,13 +1,16 @@
 def call(Map config) {
 
     pipeline {
+       agent {
+         kubernetes {
               yaml '''
       spec:
         containers:
         - name: nodejs
           image: node:16
 '''
-      …
+         }
+       }
 
         stages {
             stage("Configure Init") {
