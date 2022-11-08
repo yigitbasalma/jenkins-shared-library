@@ -8,6 +8,9 @@ def call(Map config) {
         containers:
         - name: nodejs
           image: node:16
+          command:
+          - sleep
+          - 3000
 '''
          }
        }
